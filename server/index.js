@@ -73,13 +73,19 @@ app.post("/login", async (req ,res) => {
         console.log(error);
     }
 })
-//GETTIN ALL OF USERS 
-app.get("/users", async (req , res) => {
+//GETTIN GENDERED USERS
+app.get("/gendered-users", async (req , res) => {
+
+    const gender = req.query.gender
+
+
     try {
         await client.connect();
         console.log("Conntected to mongodb");
         const database= client.db('app-data')
         const users = database.collection('users')
+        const query = { gender_identity : gender }
+        const foundUsers = await users.find(query).toArray()
         const returnedusers = await users.find().toArray()
         res.send(returnedusers)
     } catch(error){
@@ -146,5 +152,29 @@ app.get("/user", async (req, res) => {
       await client.close();
     }
   });
+
+  app.put('/addmatch' , async (req , res) => {
+
+      const {userId , matdhedUserId} = req.body
+     try {
+         await client.connect()
+         const database = client.db("app-data")
+         const users = database.collection("users")
+
+        const query = {user_id : userId}
+        const updatedDocument = {
+            $push : { matches : {user_id : matdhedUserId}}
+        }
+        const user = await users.updateOne(query , updatedDocument)
+        res.send(user)
+
+     } catch (error) {
+         console.log(error);
+     }finally{
+         await client.close()
+     }
+  })
+
+
 
 app.listen(PORT , () => {console.log("server running on PORT " + PORT);})
