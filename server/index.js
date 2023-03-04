@@ -174,7 +174,7 @@ app.get("/user", async (req, res) => {
          await client.close()
      }
   })
-//
+// GET MATCHED USERS
 app.get("/users" ,async (req , res) => {
     const userIds = JSON.parse(req.query.userIds)
     try {
