@@ -9,7 +9,6 @@ const cors  = require("cors")
 const bcrypt = require("bcrypt");
 const res = require('express/lib/response');
 const req = require('express/lib/request');
-const { query } = require('express');
 const PORT = 8000;
 const app = express()
 app.use(cors())
@@ -200,6 +199,64 @@ app.get("/users" ,async (req , res) => {
         await client.close();
     }
 })
+
+//GETTING MESSAGE HISTORY with aggregate().A bit more complex and maybe more costly 
+// caution this returns the messages sent by one user to get the whole conversation make sure you 
+//reverse the users and get the other users messages on the frontend
+app.get('/messages', async (req, res) => {
+    const { userId, correspondingUserId } = req.params;
+  
+    try {
+      await client.connect();
+      const database = client.db('app-data');
+      const cursor = database.collection('messages');
+      const pipeline = [
+        {
+          '$match': {
+            '$and': [
+              { 'from_userId': userId }, 
+              { 'to_userId': correspondingUserId }
+            ] 
+          }
+        }
+      ];
+  
+      const messageHistory = await cursor.aggregate(pipeline).toArray();
+      res.send(messageHistory);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      await client.close();
+    }
+  });
+  
+
+//2nd version simpler with find() method because the needed query is not really big.
+// app.get("/messages" , async (req , res) => {
+//     const { userId , correspondingUserId } = req.query
+
+//     try {
+//         await client.connect()
+//         const database = client.db("app-data")
+//         const cursor = database.collection("messages")
+
+//         const query = {
+//             from_userId : userId , to_userId : correspondingUserId
+//         }
+
+//         const foundMessages  = await cursor.find(query).toArray()
+//         res.send(foundMessages)
+//     } catch (error) {
+//         console.log(error);
+//     }finally{
+//         client.close()
+//     }
+
+// })
+
+
+
+
 
 
 app.listen(PORT , () => {console.log("server running on PORT " + PORT);})
