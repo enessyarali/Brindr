@@ -152,7 +152,7 @@ app.get("/user", async (req, res) => {
       await client.close();
     }
   });
-
+//ADDING MATCHES
   app.put('/addmatch' , async (req , res) => {
 
       const {userId , matdhedUserId} = req.body
@@ -174,7 +174,32 @@ app.get("/user", async (req, res) => {
          await client.close()
      }
   })
-
+//
+app.get("/users" ,async (req , res) => {
+    const userIds = JSON.parse(req.query.userIds)
+    try {
+        await client.connect()
+        const database = client.db("app-data")
+        const users = database.collection("users")
+        
+        const pipeline = [
+            {
+                '$match' : {
+                    'user_id' : {
+                        '$in' : userIds
+                    }
+                }
+            }
+        ]
+        const foundUsers = await users.aggregate(pipeline).toArray()
+        console.log(foundUsers);
+        res.send(foundUsers)
+    } catch (error) {
+        console.log(error);
+    }finally{
+        await client.close();
+    }
+})
 
 
 app.listen(PORT , () => {console.log("server running on PORT " + PORT);})
