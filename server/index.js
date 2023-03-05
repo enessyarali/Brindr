@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
   res.json("Hello");
 });
 
-//SIGNING UP
+//SIGNING UP  !!TESTED WITH POSTMAN
 app.post("/signup", async (req, res) => {
   const { email, password } = req.body;
 
@@ -42,14 +42,14 @@ app.post("/signup", async (req, res) => {
     const data = {
       user_id: generatedUserId,
       email: LCemail,
-      password: hashed_password,
+      password: hashedpassword,
     };
 
     const newuser = await users.insertOne(data);
 
     logintoken = jwt.sign(newuser, LCemail, { expiresIn: 60 * 24 }); //This token expires in 24 hours
 
-    res.status(201).json({ token, userId: generatedUserId, email: LCemail });
+    res.status(201).json({ token : logintoken, userId: generatedUserId, email: LCemail });
   } catch (error) {
     console.log(error);
   }
