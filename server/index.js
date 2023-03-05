@@ -228,27 +228,53 @@ app.get("/messages", async (req, res) => {
 });
 
 //2nd version simpler with find() method because the needed query is not really big.
-// app.get("/messages" , async (req , res) => {
-//     const { userId , correspondingUserId } = req.query
+// app.get("/messages", async (req, res) => {
+//   const { userId, correspondingUserId } = req.query;
 
-//     try {
-//         await client.connect()
-//         const database = client.db("app-data")
-//         const cursor = database.collection("messages")
+//   try {
+//     await client.connect();
+//     const database = client.db("app-data");
+//     const cursor = database.collection("messages");
 
-//         const query = {
-//             from_userId : userId , to_userId : correspondingUserId
-//         }
+//     const query = {
+//       from_userId: userId,
+//       to_userId: correspondingUserId,
+//     };
 
-//         const foundMessages  = await cursor.find(query).toArray()
-//         res.send(foundMessages)
-//     } catch (error) {
-//         console.log(error);
-//     }finally{
-//         client.close()
-//     }
+//     const foundMessages = await cursor.find(query).toArray();
+//     res.send(foundMessages);
+//   } catch (error) {
+//     console.log(error);
+//   } finally {
+//     client.close();
+//   }
+// });
 
-// })
+//ADD MESSAGES
+app.post("/messages", async (req, res) => {
+  const message = req.body;
+
+//   const newmessage = {
+//     timestamp: timestamp,
+//     from_userId: from_userId,
+//     to_userId: to_userId,
+//     message: message,
+//   };  The message object will arrive with all of this info.There is no need to destructure the incoming message data in req.body.
+  try {
+    await client.connect();
+    const database = client.db("app-data");
+    const messages = database.collection();
+    const result = await messages.insertOne(newmessage);
+    console.log(result);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    await client.close;
+  }
+});
+
+
+
 
 app.listen(PORT, () => {
   console.log("server running on PORT " + PORT);
