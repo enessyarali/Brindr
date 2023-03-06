@@ -99,14 +99,14 @@ app.get("/gendered-users", async (req, res) => {
 });
 //UPDATING USER DATA
 app.put("/user", async (req, res) => {
-  const formData = req.body.formData;
+  const formData = req.body.formData; //removed .formdata for testing
 
   try {
     await client.connect();
     const database = client.db("app-data");
     const users = database.collection("users");
 
-    const query = { userId: formData.user_id };
+    const query = { user_id: formData.user_id };
     const updatedDocument = {
       $set: {
         first_name: formData.first_name,
