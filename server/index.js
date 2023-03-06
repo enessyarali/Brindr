@@ -49,7 +49,9 @@ app.post("/signup", async (req, res) => {
 
     logintoken = jwt.sign(newuser, LCemail, { expiresIn: 60 * 24 }); //This token expires in 24 hours
 
-    res.status(201).json({ token : logintoken, userId: generatedUserId, email: LCemail });
+    res
+      .status(201)
+      .json({ token: logintoken, userId: generatedUserId, email: LCemail });
   } catch (error) {
     console.log(error);
   }
@@ -64,18 +66,19 @@ app.post("/login", async (req, res) => {
     const users = database.collection("users");
 
     const user = await users.findOne({ email });
-    const passwordcheck = await bcrypt.compare(password, user.hashed_password); // check if the password is correct
-
+    const passwordcheck = await bcrypt.compare(password, user.password); // check if the password is correct
     if (user && passwordcheck) {
       //check if the user exists and password is correct
       const token = jwt.sign(user, email, { expiresIn: 60 * 24 }); // token expires in 24 hours,user stays logged in for 24 hours
       res.status(201).json({ token, userId: user.user_id, email: email });
+    } else {
+      res.status(400).send("Invalid info");
     }
-    res.status(400).send("Invalid info");
   } catch (error) {
     console.log(error);
   }
 });
+
 //GETTIN GENDERED USERS
 app.get("/gendered-users", async (req, res) => {
   const gender = req.query.gender;
@@ -254,12 +257,12 @@ app.get("/messages", async (req, res) => {
 app.post("/messages", async (req, res) => {
   const message = req.body;
 
-//   const newmessage = {
-//     timestamp: timestamp,
-//     from_userId: from_userId,
-//     to_userId: to_userId,
-//     message: message,
-//   };  The message object will arrive with all of this info.There is no need to destructure the incoming message data in req.body.
+  //   const newmessage = {
+  //     timestamp: timestamp,
+  //     from_userId: from_userId,
+  //     to_userId: to_userId,
+  //     message: message,
+  //   };  The message object will arrive with all of this info.There is no need to destructure the incoming message data in req.body.
   try {
     await client.connect();
     const database = client.db("app-data");
@@ -272,9 +275,6 @@ app.post("/messages", async (req, res) => {
     await client.close;
   }
 });
-
-
-
 
 app.listen(PORT, () => {
   console.log("server running on PORT " + PORT);
