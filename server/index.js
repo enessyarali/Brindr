@@ -90,8 +90,7 @@ app.get("/gendered-users", async (req, res) => {
     const users = database.collection("users");
     const query = { gender_identity: gender };
     const foundUsers = await users.find(query).toArray();
-    const returnedusers = await users.find().toArray();
-    res.send(returnedusers);
+    res.send(foundUsers);
   } catch (error) {
     console.log(error);
   } finally {
