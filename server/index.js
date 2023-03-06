@@ -157,7 +157,9 @@ app.get("/user", async (req, res) => {
 });
 //ADDING MATCHES
 app.put("/addmatch", async (req, res) => {
-  const { userId, matdhedUserId } = req.body;
+//   const { userId, matdhedUserId } = req.body;
+  const userId = req.body.user_id
+  const matcheduserId = req.body.matcheduserId
   try {
     await client.connect();
     const database = client.db("app-data");
@@ -165,7 +167,7 @@ app.put("/addmatch", async (req, res) => {
 
     const query = { user_id: userId };
     const updatedDocument = {
-      $push: { matches: { user_id: matdhedUserId } },
+      $push: { matches: { user_id: matcheduserId } },
     };
     const user = await users.updateOne(query, updatedDocument);
     res.send(user);
