@@ -79,25 +79,47 @@ app.post("/login", async (req, res) => {
   }
 });
 
-//GETTIN BREED TYPES USERS //gender interest needs readjustment
-app.get("/gendered-users", async (req, res) => {
-  
+//GETTIN BREED TYPES USERS //gender interest needs readjustment incoming data will be an array
+// app.get("/breed-users", async (req, res) => {
+
+//   const breed = req.query.breed;
+
+//   try {
+//     await client.connect();
+//     console.log("Conntected to mongodb");
+//     const database = client.db("app-data");
+//     const users = database.collection("users");
+//     const query = { type_interest: breed };
+//     const foundUsers = await users.find(query).toArray();
+//     res.send(foundUsers);
+//   } catch (error) {
+//     console.log(error);
+//   } finally {
+//     client.close();
+//   }
+// });
+app.get("/preferredusers", async (req, res) => {
   const breed = req.query.breed;
+  const gender = req.query.gender;
 
   try {
     await client.connect();
-    console.log("Conntected to mongodb");
+    console.log("Connected to MongoDB");
     const database = client.db("app-data");
     const users = database.collection("users");
-    const query = { type_interest: breed };
+    const query = {
+      type_interest: { $in: breed },
+      gender: gender,
+    };
     const foundUsers = await users.find(query).toArray();
     res.send(foundUsers);
   } catch (error) {
     console.log(error);
   } finally {
-    client.close();
+    await client.close();
   }
 });
+
 //UPDATING USER DATA
 app.put("/user", async (req, res) => {
   const formData = req.body.formData; //removed .formdata for testing
@@ -117,7 +139,7 @@ app.put("/user", async (req, res) => {
         show_gender: formData.show_gender,
         gender_identity: formData.gender_identity,
         breed_type: formData.breed_type,
-        breed_interest:formData.breed_interest,
+        breed_interest: formData.breed_interest,
         // email : formData.email  this one is either in the cookies or you get it from form data check the object structure for this
         url: formData.url,
         about: formData.about,
