@@ -275,9 +275,10 @@ app.post("/messages", async (req, res) => {
   try {
     await client.connect();
     const database = client.db("app-data");
-    const messages = database.collection();
-    const result = await messages.insertOne(newmessage);
+    const messages = database.collection("messages");
+    const result = await messages.insertOne(message);
     console.log(result);
+    res.status(201).send("Message Inserted Correctly")
   } catch (error) {
     console.log(error);
   } finally {
@@ -286,5 +287,5 @@ app.post("/messages", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log("server running on PORT " + PORT);
+  console.log("server running on PORT " + PORT); 
 });
