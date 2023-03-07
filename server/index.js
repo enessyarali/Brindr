@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 app.post("/signup", async (req, res) => {
   const { email, password } = req.body;
 
-  const generatedUserId = uuidv4();
+  const generatedUserId = uuidv4();//Generates unique userid for each user
   const hashedpassword = await bcrypt.hash(password, 10);
   try {
     await client.connect();
@@ -201,7 +201,7 @@ app.put("/addmatch", async (req, res) => {
     await client.close();
   }
 });
-// GET MATCHED USERS (In the query an array of matches(userIds) should be sent to this endpoint.It sends back those users as objects in an)
+// GET MATCHED USERS (In the query an array of matches (userIds) should be sent to this endpoint.It sends back those users as objects in an)
 app.get("/users", async (req, res) => {
   const userIds = req.query.userIds ? JSON.parse(req.query.userIds) : []; //This will ensure that the query parameter correctly is correctly parsed,
 
