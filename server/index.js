@@ -79,16 +79,17 @@ app.post("/login", async (req, res) => {
   }
 });
 
-//GETTIN GENDERED USERS
+//GETTIN BREED TYPES USERS //gender interest needs readjustment
 app.get("/gendered-users", async (req, res) => {
-  const gender = req.query.gender;
+  
+  const breed = req.query.breed;
 
   try {
     await client.connect();
     console.log("Conntected to mongodb");
     const database = client.db("app-data");
     const users = database.collection("users");
-    const query = { gender_identity: gender };
+    const query = { type_interest: breed };
     const foundUsers = await users.find(query).toArray();
     res.send(foundUsers);
   } catch (error) {
@@ -115,7 +116,8 @@ app.put("/user", async (req, res) => {
         dob_year: formData.dob_year,
         show_gender: formData.show_gender,
         gender_identity: formData.gender_identity,
-        gender_interests: formData.gender_interests,
+        breed_type: formData.breed_type,
+        breed_interest:formData.breed_interest,
         // email : formData.email  this one is either in the cookies or you get it from form data check the object structure for this
         url: formData.url,
         about: formData.about,
