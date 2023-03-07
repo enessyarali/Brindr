@@ -177,10 +177,12 @@ app.put("/addmatch", async (req, res) => {
     await client.close();
   }
 });
-// GET MATCHED USERS
+// GET MATCHED USERS (In the query an array of matches(userIds) should be sent to this endpoint.It sends back those users as objects in an)
 app.get("/users", async (req, res) => {
-  const userIds = JSON.parse(req.query.userIds);
-  try {
+  const userIds = req.query.userIds ? JSON.parse(req.query.userIds) : []; //This will ensure that the query parameter correctly is correctly parsed, 
+ 
+  try {                                                                   // even if no userIds parameter is passed.
+
     await client.connect();
     const database = client.db("app-data");
     const users = database.collection("users");
@@ -208,21 +210,27 @@ app.get("/users", async (req, res) => {
 // caution this returns the messages sent by one user to get the whole conversation make sure you
 //reverse the users and get the other users messages on the frontend
 app.get("/messages", async (req, res) => {
-  const { userId, correspondingUserId } = req.params;
-
+  // const { userId, correspondingUserId } = req.params;  | Decided to get the message users with query 
+  const userId = req.query.userId;
+  const correspondingUserId = req.query.correspondingUserId;
   try {
     await client.connect();
     const database = client.db("app-data");
-    const cursor = database.collection("messages");
+    const collection = database.collection("messages");
     const pipeline = [
       {
         $match: {
-          $and: [{ from_userId: userId }, { to_userId: correspondingUserId }],
+          from_userId: userId,
+          to_userId: correspondingUserId,
         },
       },
     ];
+    
 
-    const messageHistory = await cursor.aggregate(pipeline).toArray();
+    console.log('userId:', userId);
+    console.log('correspondingUserId:', correspondingUserId);
+    const messageHistory = await collection.aggregate(pipeline).toArray();
+    console.log('messageHistory:', messageHistory);    
     res.send(messageHistory);
   } catch (error) {
     console.log(error);
