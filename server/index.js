@@ -286,7 +286,7 @@ app.get("/messages", async (req, res) => {
 //   }
 // });
 
-//ADD MESSAGES
+//ADD MESSAGES  
 app.post("/messages", async (req, res) => {
   const message = req.body;
 
