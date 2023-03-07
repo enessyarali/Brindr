@@ -157,9 +157,9 @@ app.get("/user", async (req, res) => {
 });
 //ADDING MATCHES
 app.put("/addmatch", async (req, res) => {
-//   const { userId, matdhedUserId } = req.body;
-  const userId = req.body.user_id
-  const matcheduserId = req.body.matcheduserId
+  //   const { userId, matdhedUserId } = req.body;
+  const userId = req.body.user_id;
+  const matcheduserId = req.body.matcheduserId;
   try {
     await client.connect();
     const database = client.db("app-data");
@@ -179,9 +179,10 @@ app.put("/addmatch", async (req, res) => {
 });
 // GET MATCHED USERS (In the query an array of matches(userIds) should be sent to this endpoint.It sends back those users as objects in an)
 app.get("/users", async (req, res) => {
-  const userIds = req.query.userIds ? JSON.parse(req.query.userIds) : []; //This will ensure that the query parameter correctly is correctly parsed, 
- 
-  try {                                                                   // even if no userIds parameter is passed.
+  const userIds = req.query.userIds ? JSON.parse(req.query.userIds) : []; //This will ensure that the query parameter correctly is correctly parsed,
+
+  try {
+    // even if no userIds parameter is passed.
 
     await client.connect();
     const database = client.db("app-data");
@@ -210,7 +211,7 @@ app.get("/users", async (req, res) => {
 // caution this returns the messages sent by one user to get the whole conversation make sure you
 //reverse the users and get the other users messages on the frontend
 app.get("/messages", async (req, res) => {
-  // const { userId, correspondingUserId } = req.params;  | Decided to get the message users with query 
+  // const { userId, correspondingUserId } = req.params;  | Decided to get the message users with query
   const userId = req.query.userId;
   const correspondingUserId = req.query.correspondingUserId;
   try {
@@ -225,12 +226,11 @@ app.get("/messages", async (req, res) => {
         },
       },
     ];
-    
 
-    console.log('userId:', userId);
-    console.log('correspondingUserId:', correspondingUserId);
+    console.log("userId:", userId);
+    console.log("correspondingUserId:", correspondingUserId);
     const messageHistory = await collection.aggregate(pipeline).toArray();
-    console.log('messageHistory:', messageHistory);    
+    console.log("messageHistory:", messageHistory);
     res.send(messageHistory);
   } catch (error) {
     console.log(error);
@@ -278,7 +278,7 @@ app.post("/messages", async (req, res) => {
     const messages = database.collection("messages");
     const result = await messages.insertOne(message);
     console.log(result);
-    res.status(201).send("Message Inserted Correctly")
+    res.status(201).send("Message Inserted Correctly");
   } catch (error) {
     console.log(error);
   } finally {
@@ -287,5 +287,5 @@ app.post("/messages", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log("server running on PORT " + PORT); 
+  console.log("server running on PORT " + PORT);
 });
