@@ -129,7 +129,7 @@ app.put("/user", async (req, res) => {
     const database = client.db("app-data");
     const users = database.collection("users");
 
-    const query = { user_id: formData.user_id };
+    const query = { user_id: formData.user_id }; 
     const updatedDocument = {
       $set: {
         first_name: formData.first_name,
@@ -199,7 +199,7 @@ app.put("/addmatch", async (req, res) => {
     console.log(error);
   } finally {
     await client.close();
-  }
+  } 
 });
 // GET MATCHED USERS (In the query an array of matches (userIds) should be sent to this endpoint.It sends back those users as objects in an)
 app.get("/users", async (req, res) => {
@@ -313,3 +313,4 @@ app.post("/messages", async (req, res) => {
 app.listen(PORT, () => {
   console.log("server running on PORT " + PORT);
 });
+ 
