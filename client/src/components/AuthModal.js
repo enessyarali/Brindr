@@ -11,15 +11,16 @@ const AuthModal = (props) => {
     console.log(email);
     console.log(password);
     console.log(confirmPassword);
-    const isSignUp = true;
+   
     const handleClick = () => {
         props.setShowModal(false)
+        props.setIsSignUp(true)
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
         try{
-            if(isSignUp && (password != confirmPassword)){
+            if(props.isSignUp && (password !== confirmPassword)){
                     setError("Passwords Need to Match")
             }
             console.log("make a post request to the database");
@@ -32,7 +33,7 @@ const AuthModal = (props) => {
 
         <div  className="auth-modal">
             <div   className="close-icon" onClick={handleClick}>X</div>
-            <h2>{isSignUp ? "Create Account" : "Log In" }</h2>
+            <h2>{props.isSignUp ? "Create Account" : "Log In" }</h2>
             <form onSubmit={handleSubmit}>
                     <input 
                         type='email' 
@@ -50,7 +51,7 @@ const AuthModal = (props) => {
                         required={true}
                         onChange={(e) => setPassword(e.target.value)}
                         />
-                    {isSignUp && <input //Conditional rendering if the person is not signedup we show this input if they are just logging in we dont.
+                    {props.isSignUp && <input //Conditional rendering if the person is not signedup we show this input if they are just logging in we dont.
                         type='password' 
                         id='passwordcheck' 
                         name="passwordcheck" 

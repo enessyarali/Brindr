@@ -3,6 +3,7 @@ import logo from "../images/brindrLogo.png";
 const Nav = (props) => {
   const handleClick = () => {
     props.setShowModal(true);
+    props.setIsSignUp(false)
   };
   return (
     <nav>

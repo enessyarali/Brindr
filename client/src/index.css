@@ -1,68 +1,79 @@
 @import url("https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;300;400;500;600;700&display=swap");
 
-html , body {
+html,
+body {
   margin: 0;
   padding: 0;
+  text-align: center;
 }
 
 * {
   font-family: "Readex Pro", "sans-serif ";
 }
 
-h2{
-    font-style: italic;
+h2 {
+  font-style: italic;
+}
+
+.primary-title{
+    font-size: 60px;
+    color: #fff;
+    margin: 20px;
 }
 
 .primary-button {
   color: #fff;
   text-transform: uppercase;
   font-size: 15px;
-  background: linear-gradient(45deg,rgba(117,91,179,255),rgb(230, 125, 239));
+  background: linear-gradient(
+    45deg,
+    rgba(117, 91, 179, 255),
+    rgb(230, 125, 239)
+  );
   padding: 12px 30px;
   border-radius: 30px;
   border: none;
+  margin-bottom: 20px;
 }
 
 .primary-button:hover {
-  background: linear-gradient(260deg,rgba(117,91,179,255),rgb(230, 125, 239));
+  background: linear-gradient(
+    260deg,
+    rgba(117, 91, 179, 255),
+    rgb(230, 125, 239)
+  );
 }
 
-.secondary-button{
-    color: rgb(121, 119, 119);
-    background-color: #fff;
-    font-weight: 500;
-    font-size: 15px;
-    text-transform: uppercase;
-    padding: 12px 30px;
-    border-radius: 30px;
-    border : solid 2px rgb(121, 119, 119);
-    margin: 6px;
-
-
+.secondary-button {
+  color: rgb(121, 119, 119);
+  background-color: #fff;
+  font-weight: 500;
+  font-size: 15px;
+  text-transform: uppercase;
+  padding: 12px 30px;
+  border-radius: 30px;
+  border: solid 2px rgb(121, 119, 119);
+  margin: 6px;
 }
 
-.secondary-button:hover{
-    color: rgb(48, 48, 48);
-    border: solid 2px gb(48, 48, 48);
-
+.secondary-button:hover {
+  color: rgb(48, 48, 48);
+  border: solid 2px gb(48, 48, 48);
 }
 
-body {
-  text-align: center;
-}
 
 /* -------- Navbar ------- */
 nav {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  background: rgba(117,91,179,255);
+  background: rgba(117, 91, 179, 255);
   border: none;
 }
 
 nav .logo-container {
   width: 60px;
-  margin: 15px;
+  margin: 5px;
 }
 
 nav .logo-container .logo {
@@ -71,58 +82,58 @@ nav .logo-container .logo {
 }
 
 nav .nav-button {
-    color: rgb(230, 125, 239);
-    background-color: #fff;
-    font-size: 20px;
-    padding: 10px 20px;
-    border-radius: 10px;
-    border: none;
-    margin: 10px;
-
-
+  color: rgb(230, 125, 239);
+  background-color: #fff;
+  font-size: 20px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  margin: 10px;
 }
 
-nav .nav-button:disabled  {
-    background-color: rgb(174, 172, 174) ;
-    color: rgb(149, 83, 156);
+nav .nav-button:disabled {
+  background-color: rgb(174, 172, 174);
+  color: rgb(149, 83, 156);
 }
 
 /* -------- Home Page ------- */
 .overlay {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    background: linear-gradient(rgb(0,0,0,0.65) 0%, rgb(0,0,0,0) 100% );
-}
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background: linear-gradient(rgb(0, 0, 0, 0.65) 0%, rgb(0, 0, 0, 0) 100%) 
+  , url('images/cat-love.jpg') ;
+} 
+
 
 /* -------- Auth Modal ------- */
 
 .auth-modal {
-   
-    top: 175px;
-    margin-top: 5px;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 360px;
-    height: 600px;
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 40px;
+  top: 100px;
+  left: 0;
+  right: 0;
+  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 360px;
+  height: 450px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 40px;
 }
 
-.auth-modal .close-icon{
-    float: right;
+.auth-modal .close-icon {
+  float: right;
 }
 
-.auth-modal form{
-    display: flex;
-    flex-direction: column;
+.auth-modal form {
+  display: flex;
+  flex-direction: column;
 }
 
-.auth-modal input[type = password],
-.auth-modal input[type = email] {
-    padding: 8px;
-    margin: 8px;
-    font-size: 17px;
-
+.auth-modal input[type="password"],
+.auth-modal input[type="email"] {
+  padding: 8px;
+  margin: 8px;
+  font-size: 17px;
 }
