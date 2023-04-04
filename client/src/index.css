@@ -161,9 +161,6 @@ nav .nav-button:disabled {
   border-radius: 10px;
 }
 
-.onboarding form input{
-  margin: 10px 0px;
-}
 
 .onboarding form .multiple-input-container{
   display: flex;
@@ -174,6 +171,10 @@ nav .nav-button:disabled {
 .onboarding form input::-webkit-inner-spin-button{
   -webkit-appearance: none;
   margin: 0;
+}
+
+.onboarding form label {
+  margin: 10px 0px;
 }
 
 .onboarding form .multiple-input-container input{
@@ -202,8 +203,7 @@ nav .nav-button:disabled {
   width: 10%;
 }
 
-.onboarding form input[type="radio"]:checked  {
-  display: none;
+.onboarding form input[type="radio"]:checked + label {
   border: solid 2px rgb(221, 39, 22);
 
 }
@@ -218,4 +218,5 @@ nav .nav-button:disabled {
 
 .onboarding form .photo-container img{
     width: 100%;
+
 }

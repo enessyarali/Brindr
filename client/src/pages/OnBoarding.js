@@ -93,8 +93,7 @@ const OnBoarding = () => {
               <input
                 id="male-gender-identity"
                 type="radio"
-                name="gender-identity"
-                required={true}
+                name="gender"
                 value="male"
                 onChange={handleChange}
                 checked={formData.gender === "male"}
@@ -104,8 +103,7 @@ const OnBoarding = () => {
               <input
                 id="female-gender-identity"
                 type="radio"
-                name="gender-identity"
-                required={true}
+                name="gender"
                 value="female"
                 onChange={handleChange}
                 checked={formData.gender === "female"}
