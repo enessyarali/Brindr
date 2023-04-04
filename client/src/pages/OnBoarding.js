@@ -1,37 +1,70 @@
 import { useState } from "react";
 import Nav from "../components/Nav";
-
+import BreedSelection from "../components/breedselection";
 const OnBoarding = () => {
- //CREATE AN COMPONENT TO POPULATE THE BREED PREFERENCE
-    const [formData,setFormData] = useState({
-        user_id : "",
-        first_name:"",
-        dob_day:"",
-        dob_month:"",
-        dob_year:"",
-        gender : "",
-        email:"",
-        url:"",
-        about:"",
-        breed_preference:[],
-        matches : []
-    })
-  const handleSubmit = (e) => {
-    
-  };
+  //CREATE AN COMPONENT TO POPULATE THE BREED PREFERENCE
+  const [formData, setFormData] = useState({
+    user_id: "",
+    first_name: "",
+    dob_day: "",
+    dob_month: "",
+    dob_year: "",
+    gender: "",
+    email: "",
+    url: "",
+    about: "",
+    breed_preference: [],
+    matches: [],
+  });
+
+  const handleSubmit = (e) => {};
 
   const handleChange = (e) => {
-    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value
+    const value =
+      e.target.type === "checkbox" ? e.target.checked : e.target.value;
     const name = e.target.name;
-    console.log("value: " + value , "name: " + name);
+    console.log("value: " + value, "name: " + name);
 
-    setFormData((prevState) =>({
-        ...prevState,
-        [name] : value
-    }))
-
-   
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
+
+  const handleOptionChange = (event, index) => {
+    const { value } = event.target;
+    setFormData((prevState) => {
+      const breed_preference = [...prevState.breed_preference];
+      breed_preference[index] = value;
+      return { ...prevState, breed_preference };
+    });
+  };
+
+  const addInput = () => {
+    setFormData((prevState) => ({
+      ...prevState,
+      breed_preference: [
+        ...prevState.breed_preference,
+        { option: "", value: "" },
+      ],
+    }));
+  };
+
+  const deleteInput = (index) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      breed_preference: prevState.breed_preference.filter(
+        (_, i) => i !== index
+      ),
+    }));
+  };
+  const options = [
+    "Labrador",
+    "Poodle",
+    "Golden Retriever",
+    "Bulldog",
+    "Beagle",
+  ];
 
   console.log(formData);
 
@@ -98,8 +131,8 @@ const OnBoarding = () => {
                 onChange={handleChange}
                 checked={formData.gender === "male"}
               />
-               <label htmlFor="male-gender-identity">Male</label>
-              
+              <label htmlFor="male-gender-identity">Male</label>
+
               <input
                 id="female-gender-identity"
                 type="radio"
@@ -110,7 +143,7 @@ const OnBoarding = () => {
               />
               <label htmlFor="female-gender-identity">Female</label>
             </div>
-          
+
             <label htmlFor="about">About Me</label>
             <input
               id="about"
@@ -120,6 +153,14 @@ const OnBoarding = () => {
               placeholder="Tell Us Abouy Yourself!"
               value={formData.about}
               onChange={handleChange}
+            />
+            <label>Breed Preference </label>
+            <BreedSelection
+              handleOptionChange={handleOptionChange}
+              addInput={addInput}
+              deleteInput={deleteInput}
+              options={options}
+              breedPreference={formData.breed_preference}
             />
 
             <input type="submit" />
@@ -135,11 +176,8 @@ const OnBoarding = () => {
               required={true}
             />
             <div className="photo-container">
-                <img src={formData.url} alt="profile pic preview"></img>
+              <img src={formData.url} alt="profile pic preview"></img>
             </div>
-
-            
-
           </section>
         </form>
       </div>
