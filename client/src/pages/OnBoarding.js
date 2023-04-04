@@ -2,9 +2,38 @@ import { useState } from "react";
 import Nav from "../components/Nav";
 
 const OnBoarding = () => {
-  const handleSubmit = () => {};
+ //CREATE AN COMPONENT TO POPULATE THE BREED PREFERENCE
+    const [formData,setFormData] = useState({
+        user_id : "",
+        first_name:"",
+        dob_day:"",
+        dob_month:"",
+        dob_year:"",
+        gender : "",
+        email:"",
+        url:"",
+        about:"",
+        breed_preference:[],
+        matches : []
+    })
+  const handleSubmit = (e) => {
+    
+  };
 
-  const handleChange = () => {};
+  const handleChange = (e) => {
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value
+    const name = e.target.name;
+    console.log("value: " + value , "name: " + name);
+
+    setFormData((prevState) =>({
+        ...prevState,
+        [name] : value
+    }))
+
+   
+  };
+
+  console.log(formData);
 
   return (
     <>
@@ -25,7 +54,7 @@ const OnBoarding = () => {
               name="first_name"
               placeholder="First Name"
               required={true}
-              value={""}
+              value={formData.first_name}
               onChange={handleChange}
             />
             <label>Birthday</label>
@@ -36,7 +65,7 @@ const OnBoarding = () => {
                 name="dob_day"
                 placeholder="DD"
                 required={true}
-                value={""}
+                value={formData.dob_day}
                 onChange={handleChange}
               />
               <input
@@ -45,7 +74,7 @@ const OnBoarding = () => {
                 name="dob_month"
                 placeholder="MM"
                 required={true}
-                value={""}
+                value={formData.dob_month}
                 onChange={handleChange}
               />
               <input
@@ -54,14 +83,13 @@ const OnBoarding = () => {
                 name="dob_year"
                 placeholder="YYYY"
                 required={true}
-                value={""}
+                value={formData.dob_year}
                 onChange={handleChange}
               />
             </div>
 
             <label>Gender</label>
             <div className="multiple-input-container">
-              <label htmlFor="male-gender-identity">Male</label>
               <input
                 id="male-gender-identity"
                 type="radio"
@@ -69,42 +97,22 @@ const OnBoarding = () => {
                 required={true}
                 value="male"
                 onChange={handleChange}
-                checked={false}
+                checked={formData.gender === "male"}
+              />
+               <label htmlFor="male-gender-identity">Male</label>
+              
+              <input
+                id="female-gender-identity"
+                type="radio"
+                name="gender-identity"
+                required={true}
+                value="female"
+                onChange={handleChange}
+                checked={formData.gender === "female"}
               />
               <label htmlFor="female-gender-identity">Female</label>
-              <input
-                id="female-gender-identity"
-                type="radio"
-                name="gender-identity"
-                required={true}
-                value="female"
-                onChange={handleChange}
-                checked={false}
-              />
             </div>
-            <label htmlFor="show-gender">Show Gender On My Profile </label>
-            <input
-              id="show-gender"
-              type="checkbox"
-              name="show-gender"
-              required={true}
-              value="female"
-              onChange={handleChange}
-              checked={false}
-            />
-
-            <label>Show Me</label>
-            <div className="multiple-input-container">
-              <input
-                id="female-gender-identity"
-                type="radio"
-                name="gender-identity"
-                required={true}
-                value="female"
-                onChange={handleChange}
-                checked={false}
-              />
-            </div>
+          
             <label htmlFor="about">About Me</label>
             <input
               id="about"
@@ -112,7 +120,7 @@ const OnBoarding = () => {
               name="about"
               required={true}
               placeholder="Tell Us Abouy Yourself!"
-              value={""}
+              value={formData.about}
               onChange={handleChange}
             />
 
@@ -120,20 +128,21 @@ const OnBoarding = () => {
           </section>
           <section>
             <label htmlFor="url">Profile Photo</label>
-           
-              <input
-                type="url"
-                name="url"
-                id="url"
-                onChange={handleChange}
-                required={true}
-              />
-          <div className="photo-container">
-            
-          </div>
-          </section>
 
-         
+            <input
+              type="url"
+              name="url"
+              id="url"
+              onChange={handleChange}
+              required={true}
+            />
+            <div className="photo-container">
+                <img src={formData.url} alt="profile pic preview"></img>
+            </div>
+
+            
+
+          </section>
         </form>
       </div>
     </>

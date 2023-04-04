@@ -6,6 +6,12 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true,
   serverApi: ServerApiVersion.v1,
 });
+
+const corsOptions = {
+  origin: 'https://imgur.com',
+  allowedHeaders: ['Authorization', 'Content-Type']
+};
+
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
@@ -15,7 +21,7 @@ const res = require("express/lib/response");
 const req = require("express/lib/request");
 const PORT = 8000;
 const app = express();
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get("/", (req, res) => {
