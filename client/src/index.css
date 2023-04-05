@@ -302,3 +302,71 @@ nav .nav-button:disabled {
     text-align: left;
     z-index: 1;
 }
+
+.chat-container .chat-container-header{
+  background: linear-gradient(
+    45deg,
+    rgba(117, 91, 179, 255),
+    rgb(230, 125, 239)
+  );
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+
+}
+
+.chat-container .option{
+  border: none;
+  background-color: #fff;
+  border-bottom: solid 4px rgba(117, 91, 179, 255);
+  font-size: 20px;
+  margin: 2px;
+  padding: 10px;
+}
+
+.chat-container .option:disabled{
+  border-bottom: solid 4px rgb(187,187,187);;
+}
+
+.chat-container .profile{
+  display: flex ;
+  padding: 20px;
+  align-items: center;
+  color: #fff;
+}
+
+.image-container{
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 10px;
+}
+
+.image-container img{
+  width: 100%;
+  height: 100%;
+}
+
+.chat-container .logout-icon{
+  display: flex ;
+  padding: 20px;
+  align-items: center;
+  color: #fff;
+}
+
+ /* --- Chat Display --- */
+
+ .chat-display{
+  padding: 20px;
+  height: 50vh;
+  overflow-y: auto;
+ }
+
+ .chat-input{
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+ }
