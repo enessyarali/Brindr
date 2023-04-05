@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Nav from "../components/Nav";
-import BreedSelection from "../components/breedselection";
+import BreedSelection from "../components/BreedSelection";
 const OnBoarding = () => {
   //CREATE AN COMPONENT TO POPULATE THE BREED PREFERENCE
   const [formData, setFormData] = useState({

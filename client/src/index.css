@@ -71,6 +71,7 @@ nav {
   border: none;
 }
 
+
 nav .logo-container {
   width: 60px;
   margin: 5px;
@@ -219,4 +220,37 @@ nav .nav-button:disabled {
 .onboarding form .photo-container img{
     width: 100%;
 
+}
+
+/* -------- BreedSelection ------- */
+
+.breedselection_container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.breedselection_container > div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.breedselection_container > div > select {
+  width: 100%;
+  height: 30px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  font-size: 16px;
+}
+
+.breedselection_container > div > button {
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 16px;
+  cursor: pointer;
 }
