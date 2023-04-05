@@ -15,10 +15,10 @@ h2 {
   font-style: italic;
 }
 
-.primary-title{
-    font-size: 60px;
-    color: #fff;
-    margin: 20px;
+.primary-title {
+  font-size: 60px;
+  color: #fff;
+  margin: 20px;
 }
 
 .primary-button {
@@ -61,7 +61,6 @@ h2 {
   border: solid 2px gb(48, 48, 48);
 }
 
-
 /* -------- Navbar ------- */
 nav {
   width: 100%;
@@ -70,7 +69,6 @@ nav {
   background: rgba(117, 91, 179, 255);
   border: none;
 }
-
 
 nav .logo-container {
   width: 60px;
@@ -102,10 +100,9 @@ nav .nav-button:disabled {
   width: 100vw;
   height: 100vh;
   position: fixed;
-  background: linear-gradient(rgb(0, 0, 0, 0.65) 0%, rgb(0, 0, 0, 0) 100%) 
-  , url('images/cat-love.jpg') ;
-} 
-
+  background: linear-gradient(rgb(0, 0, 0, 0.65) 0%, rgb(0, 0, 0, 0) 100%),
+    url("images/cat-love.jpg");
+}
 
 /* -------- Auth Modal ------- */
 
@@ -141,12 +138,11 @@ nav .nav-button:disabled {
 
 /* -------- OnBoarding Page ------- */
 
-.onboarding form{
+.onboarding form {
   display: flex;
   justify-content: center;
-
 }
-.onboarding form section{
+.onboarding form section {
   display: flex;
   flex-direction: column;
   padding: 30px;
@@ -154,7 +150,7 @@ nav .nav-button:disabled {
   text-align: left;
 }
 
-.onboarding form input{
+.onboarding form input {
   padding: 15px 30px;
   margin: 10px 0px;
   font-size: 15px;
@@ -162,14 +158,13 @@ nav .nav-button:disabled {
   border-radius: 10px;
 }
 
-
-.onboarding form .multiple-input-container{
+.onboarding form .multiple-input-container {
   display: flex;
   flex-direction: row;
 }
 
 .onboarding form input::-webkit-outer-spin-button,
-.onboarding form input::-webkit-inner-spin-button{
+.onboarding form input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
@@ -178,26 +173,23 @@ nav .nav-button:disabled {
   margin: 10px 0px;
 }
 
-.onboarding form .multiple-input-container input{
+.onboarding form .multiple-input-container input {
   margin-right: 10px;
-
 }
 
-.onboarding form .multiple-input-container label{
+.onboarding form .multiple-input-container label {
   padding: 10px;
   border: solid 2px rgb(144, 144, 144);
   border-radius: 10px;
   transition: all 0.3s;
- 
+
   margin-top: 10px;
   margin-bottom: 10px;
   margin-right: 10px;
 }
 
-
 .onboarding form input[type="radio"] {
   display: none;
-
 }
 
 .onboarding form input[type="number"] {
@@ -206,20 +198,18 @@ nav .nav-button:disabled {
 
 .onboarding form input[type="radio"]:checked + label {
   border: solid 2px rgb(221, 39, 22);
-
 }
 
-.onboarding form input[type="submit"]:hover{
+.onboarding form input[type="submit"]:hover {
   background-color: rgb(235, 235, 235);
 }
 
-.onboarding form input[type="submit"]:active{
+.onboarding form input[type="submit"]:active {
   background-color: rgb(226, 115, 155);
 }
 
-.onboarding form .photo-container img{
-    width: 100%;
-
+.onboarding form .photo-container img {
+  width: 100%;
 }
 
 /* -------- BreedSelection ------- */
@@ -257,13 +247,12 @@ nav .nav-button:disabled {
 
 /* -------- DashBoard ------- */
 
-.dashboard{
+.dashboard {
   display: flex;
   justify-content: space-between;
-
 }
 
-.dashboard .swiper-container{
+.dashboard .swiper-container {
   width: 70%;
   display: flex;
   flex-direction: column;
@@ -285,12 +274,11 @@ nav .nav-button:disabled {
   background-color: #fff;
   width: 400px;
   height: 650px;
-  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.30);
+  box-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.3);
   border-radius: 30px;
   background-size: cover;
   background-position: center;
 }
-
 
 .card h3 {
   position: absolute;
@@ -299,8 +287,18 @@ nav .nav-button:disabled {
   color: #060606;
 }
 
-.dashboard .swipe-info{
+.dashboard .swipe-info {
   position: absolute;
   bottom: 0;
   padding: 5px;
+}
+
+/*---- Chat Container ---- */
+
+.chat-container {
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.8) 0px 0px 0px 1px;
+    text-align: left;
+    z-index: 1;
 }
