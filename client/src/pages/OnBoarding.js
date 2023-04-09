@@ -13,7 +13,8 @@ const OnBoarding = () => {
     email: "",
     url: "",
     about: "",
-    breed_preference: [],
+    breed_type: "",
+    breed_interest: [],
     matches: [],
   });
 
@@ -144,6 +145,26 @@ const OnBoarding = () => {
               <label htmlFor="female-gender-identity">Female</label>
             </div>
 
+          <label htmlFor="breed-type">Breed Type</label>
+          <input
+              id="breed-type"
+              type="text"
+              name="breed-type"
+              required={true}
+              placeholder="Which breed are you?"
+              value={formData.breed_type}
+              onChange={handleChange}
+            />
+            
+            <label>Breed Preference </label>
+            <BreedSelection
+              handleOptionChange={handleOptionChange}
+              addInput={addInput}
+              deleteInput={deleteInput}
+              options={options}
+              breedPreference={formData.breed_interest}
+            />
+
             <label htmlFor="about">About Me</label>
             <input
               id="about"
@@ -154,15 +175,7 @@ const OnBoarding = () => {
               value={formData.about}
               onChange={handleChange}
             />
-            <label>Breed Preference </label>
-            <BreedSelection
-              handleOptionChange={handleOptionChange}
-              addInput={addInput}
-              deleteInput={deleteInput}
-              options={options}
-              breedPreference={formData.breed_preference}
-            />
-
+            
             <input type="submit" />
           </section>
           <section>

@@ -102,6 +102,8 @@ nav .nav-button:disabled {
   position: fixed;
   background: linear-gradient(rgb(0, 0, 0, 0.65) 0%, rgb(0, 0, 0, 0) 100%),
     url("images/cat-love.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 /* -------- Auth Modal ------- */
@@ -304,11 +306,7 @@ nav .nav-button:disabled {
 }
 
 .chat-container .chat-container-header{
-  background: linear-gradient(
-    45deg,
-    rgba(117, 91, 179, 255),
-    rgb(230, 125, 239)
-  );
+  background: #6096B4;
   height: 100px;
   display: flex;
   justify-content: space-between;

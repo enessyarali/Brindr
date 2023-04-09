@@ -8,8 +8,8 @@ const client = new MongoClient(uri, {
 });
 
 const corsOptions = {
-  origin: 'https://imgur.com',
-  allowedHeaders: ['Authorization', 'Content-Type']
+  origin: "https://imgur.com",
+  allowedHeaders: ["Authorization", "Content-Type"],
 };
 
 const express = require("express");
@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
 app.post("/signup", async (req, res) => {
   const { email, password } = req.body;
 
-  const generatedUserId = uuidv4();//Generates unique userid for each user
+  const generatedUserId = uuidv4(); //Generates unique userid for each user
   const hashedpassword = await bcrypt.hash(password, 10);
   try {
     await client.connect();
@@ -135,18 +135,16 @@ app.put("/user", async (req, res) => {
     const database = client.db("app-data");
     const users = database.collection("users");
 
-    const query = { user_id: formData.user_id }; 
+    const query = { user_id: formData.user_id };
     const updatedDocument = {
       $set: {
         first_name: formData.first_name,
         dob_day: formData.dob_day,
         dob_month: formData.dob_month,
         dob_year: formData.dob_year,
-        show_gender: formData.show_gender,
-        gender_identity: formData.gender_identity,
+        gender_identity: formData.gender,
         breed_type: formData.breed_type,
         breed_interest: formData.breed_interest,
-        // email : formData.email  this one is either in the cookies or you get it from form data check the object structure for this
         url: formData.url,
         about: formData.about,
         matches: formData.matches,
@@ -205,7 +203,7 @@ app.put("/addmatch", async (req, res) => {
     console.log(error);
   } finally {
     await client.close();
-  } 
+  }
 });
 // GET MATCHED USERS (In the query an array of matches (userIds) should be sent to this endpoint.It sends back those users as objects in an)
 app.get("/users", async (req, res) => {
@@ -292,7 +290,7 @@ app.get("/messages", async (req, res) => {
 //   }
 // });
 
-//ADD MESSAGES   
+//ADD MESSAGES
 app.post("/messages", async (req, res) => {
   const message = req.body;
 
@@ -319,4 +317,3 @@ app.post("/messages", async (req, res) => {
 app.listen(PORT, () => {
   console.log("server running on PORT " + PORT);
 });
- 
