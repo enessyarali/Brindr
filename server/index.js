@@ -125,7 +125,7 @@ app.get("/preferredusers", async (req, res) => {
 //UPDATING USER DATA
 app.put("/user", async (req, res) => {
   const formData = req.body.formData; //removed .formdata for testing
-
+  console.log(formData);
   try {
     await client.connect();
     const database = client.db("app-data");
@@ -139,8 +139,8 @@ app.put("/user", async (req, res) => {
         dob_month: formData.dob_month,
         dob_year: formData.dob_year,
         gender_identity: formData.gender,
-        breed_type: formData.breed_type,
-        breed_interest: formData.breed_interest,
+        breed_type: formData.breed_type, 
+        breed_interest: formData.breed_interest, 
         url: formData.url,
         about: formData.about,
         matches: formData.matches,
