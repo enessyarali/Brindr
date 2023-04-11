@@ -7,10 +7,6 @@ const client = new MongoClient(uri, {
   serverApi: ServerApiVersion.v1,
 });
 
-const corsOptions = {
-  origin: "https://imgur.com",
-  allowedHeaders: ["Authorization", "Content-Type"],
-};
 
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
@@ -21,7 +17,7 @@ const res = require("express/lib/response");
 const req = require("express/lib/request");
 const PORT = 8000;
 const app = express();
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -76,7 +72,7 @@ app.post("/login", async (req, res) => {
     if (user && passwordcheck) {
       //check if the user exists and password is correct
       const token = jwt.sign(user, email, { expiresIn: 60 * 24 }); // token expires in 24 hours,user stays logged in for 24 hours
-      res.status(201).json({ token, userId: user.user_id, email: email });
+      res.status(201).json({ token, userId: user.user_id });
     } else {
       res.status(400).send("Invalid info");
     }

@@ -1,13 +1,15 @@
 import { useState } from "react"
 import axios from "axios"
 import {useNavigate} from "react-router-dom"
-
+import {useCookies} from "react-cookie"
 const AuthModal = (props) => {
     
     const [email, setEmail] = useState(null)
     const [password , setPassword] = useState(null)
     const [confirmPassword , setConfirmPassword] = useState(null)
     const [error ,setError] = useState(null)
+    const [cookies, setCookie, removeCookie] = useCookies(null);
+
 
     console.log(email);
     console.log(password);
@@ -26,13 +28,14 @@ const AuthModal = (props) => {
             if(props.isSignUp && (password !== confirmPassword)){
                     setError("Passwords Need to Match")
                     return
-            }else{
-               const response = await axios.post("http://localhost:8000/signup", {email, password})
-               const success = response.status === 201;
-               if (success) {
-                navigate('/onboarding')
-               }
             }
+               const response = await axios.post(`http://localhost:8000/${props.isSignUp ? 'signup' : 'login'}`, {email, password})
+               setCookie('AuthToken', response.data.token)
+               setCookie( 'UserId', response.data.userId )
+               const success = response.status === 201;
+               if (success && props.isSignUp)  navigate('/onboarding');
+               if (success && !props.isSignUp) navigate('/dashboard');
+            
             console.log("make a post request to the database");
         }catch(error){
             console.log(error);

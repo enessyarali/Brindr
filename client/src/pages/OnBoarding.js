@@ -1,16 +1,19 @@
 import { useState } from "react";
 import Nav from "../components/Nav";
 import BreedSelection from "../components/BreedSelection";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const OnBoarding = () => {
-  //CREATE AN COMPONENT TO POPULATE THE BREED PREFERENCE
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    user_id: "",
+    user_id: cookies.UserId,
     first_name: "",
     dob_day: "",
     dob_month: "",
     dob_year: "",
     gender: "",
-    email: "",
     url: "",
     about: "",
     breed_type: "",
@@ -18,7 +21,16 @@ const OnBoarding = () => {
     matches: [],
   });
 
-  const handleSubmit = (e) => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put("http://localhost:8000/user", formData);
+      const success = response.statusCode === 200;
+      if (success) navigate("/dashboard");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleChange = (e) => {
     const value =
@@ -35,28 +47,23 @@ const OnBoarding = () => {
   const handleOptionChange = (event, index) => {
     const { value } = event.target;
     setFormData((prevState) => {
-      const breed_preference = [...prevState.breed_preference];
-      breed_preference[index] = value;
-      return { ...prevState, breed_preference };
+      const breed_interest = [...prevState.breed_interest];
+      breed_interest[index] = value;
+      return { ...prevState, breed_interest };
     });
   };
 
   const addInput = () => {
     setFormData((prevState) => ({
       ...prevState,
-      breed_preference: [
-        ...prevState.breed_preference,
-        { option: "", value: "" },
-      ],
+      breed_interest: [...prevState.breed_interest, { option: "", value: "" }],
     }));
   };
 
   const deleteInput = (index) => {
     setFormData((prevState) => ({
       ...prevState,
-      breed_preference: prevState.breed_preference.filter(
-        (_, i) => i !== index
-      ),
+      breed_interest: prevState.breed_interest.filter((_, i) => i !== index),
     }));
   };
   const options = [
@@ -145,18 +152,18 @@ const OnBoarding = () => {
               <label htmlFor="female-gender-identity">Female</label>
             </div>
 
-          <label htmlFor="breed-type">Breed Type</label>
-          <input
+            <label htmlFor="breed-type">Breed Type</label>
+            <input
               id="breed-type"
               type="text"
-              name="breed-type"
+              name="breed_type"
               required={true}
               placeholder="Which breed are you?"
               value={formData.breed_type}
               onChange={handleChange}
             />
-            
-            <label>Breed Preference </label>
+
+            <label>Breed interes </label>
             <BreedSelection
               handleOptionChange={handleOptionChange}
               addInput={addInput}
@@ -175,7 +182,7 @@ const OnBoarding = () => {
               value={formData.about}
               onChange={handleChange}
             />
-            
+
             <input type="submit" />
           </section>
           <section>
@@ -189,7 +196,9 @@ const OnBoarding = () => {
               required={true}
             />
             <div className="photo-container">
-              <img src={formData.url} alt="profile pic preview"></img>
+              {formData.url && (
+                <img src={formData.url} alt="profile pic preview"></img>
+              )}
             </div>
           </section>
         </form>
