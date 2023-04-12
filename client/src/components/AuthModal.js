@@ -35,7 +35,7 @@ const AuthModal = (props) => {
                const success = response.status === 201;
                if (success && props.isSignUp)  navigate('/onboarding');
                if (success && !props.isSignUp) navigate('/dashboard');
-            
+            window.location.reload();
             console.log("make a post request to the database");
         }catch(error){
             console.log(error);

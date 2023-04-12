@@ -7,7 +7,6 @@ const client = new MongoClient(uri, {
   serverApi: ServerApiVersion.v1,
 });
 
-
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
@@ -157,11 +156,12 @@ app.put("/user", async (req, res) => {
 
 //GETTING ONE USER
 app.get("/user", async (req, res) => {
-  const userId = req.query.userId;
+  const userId = req.query.UserId;
   try {
     await client.connect();
     const database = client.db("app-data");
     const users = database.collection("users");
+    console.log(userId);
     const query = { user_id: userId };
     const user = await users.findOne(query);
     if (!user) {
