@@ -1,5 +1,6 @@
 const { MongoClient, ServerApiVersion } = require("mongodb");
-require("dotenv").config();
+require('dotenv').config();
+
 const uri = process.env.URI;
   
 const client = new MongoClient(uri, {
@@ -10,7 +11,7 @@ const client = new MongoClient(uri, {
 
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
-const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");    
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const res = require("express/lib/response");
@@ -46,7 +47,7 @@ app.post("/signup", async (req, res) => {
       email: LCemail,
       password: hashedpassword,
     };
-
+ 
     const newuser = await users.insertOne(data);
 
     logintoken = jwt.sign(newuser, LCemail, { expiresIn: 60 * 24 }); //This token expires in 24 hours
@@ -83,9 +84,7 @@ app.post("/login", async (req, res) => {
 
 //GETTIN BREED TYPES USERS //gender interest needs readjustment incoming data will be an array
 // app.get("/breed-users", async (req, res) => {
-
 //   const breed = req.query.breed;
-
 //   try {
 //     await client.connect();
 //     console.log("Conntected to mongodb");
@@ -127,38 +126,38 @@ app.get("/preferredusers", async (req, res) => {
   }
 });
 
-//UPDATING USER DATA
-app.put("/user", async (req, res) => {
-  const formData = req.body.formData; //removed .formdata for testing
-  console.log(formData);
-  try {
-    await client.connect();
-    const database = client.db("app-data");
-    const users = database.collection("users");
+// //UPDATING USER DATA
+// app.put("/user", async (req, res) => {
+//   const formData = req.body.formData; //removed .formdata for testing
+//   console.log(formData);
+//   try {
+//     await client.connect();
+//     const database = client.db("app-data");
+//     const users = database.collection("users");
 
-    const query = { user_id: formData.user_id };
-    const updatedDocument = {
-      $set: {
-        first_name: formData.first_name,
-        dob_day: formData.dob_day,
-        dob_month: formData.dob_month,
-        dob_year: formData.dob_year,
-        gender_identity: formData.gender,
-        breed_type: formData.breed_type,
-        breed_interest: formData.breed_interest,
-        url: formData.url,
-        about: formData.about,
-        matches: formData.matches,
-      },
-    };
-    const updatedUser = await users.updateOne(query, updatedDocument);
-    res.send(updatedUser);
-  } catch (error) {
-    console.log(error);
-  } finally {
-    await client.close();
-  }
-});
+//     const query = { user_id: formData.user_id };
+//     const updatedDocument = {
+//       $set: {
+//         first_name: formData.first_name,
+//         dob_day: formData.dob_day,
+//         dob_month: formData.dob_month,
+//         dob_year: formData.dob_year,
+//         gender_identity: formData.gender,
+//         breed_type: formData.breed_type,
+//         breed_interest: formData.breed_interest,
+//         url: formData.url,
+//         about: formData.about,
+//         matches: formData.matches,
+//       },
+//     };
+//     const updatedUser = await users.updateOne(query, updatedDocument);
+//     res.send(updatedUser);
+//   } catch (error) {
+//     console.log(error);
+//   } finally {
+//     await client.close();
+//   }
+// });
 
 //GETTING ONE USER
 app.get("/user", async (req, res) => {
@@ -168,7 +167,7 @@ app.get("/user", async (req, res) => {
     const database = client.db("app-data");
     const users = database.collection("users");
     const query = { user_id: userId };
-    const user = await users.findOne(query);
+    const user = await users.findOne(query); 
     if (!user) {
       // If user is not found, return 404 error
       res.status(404).send("User not found");
