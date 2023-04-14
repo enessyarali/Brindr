@@ -102,9 +102,12 @@ app.post("/login", async (req, res) => {
 app.get("/preferredusers", async (req, res) => {
   const breed_interest = req.query.breed_interest;
   const gender = req.query.gender;
-  let gender_interest = ""
-  if(gender === "male"){gender_interest = "female";
-  }else if(gender === "female") {gender_interest = "male";}
+  let gender_interest = "";
+  if (gender === "male") {
+    gender_interest = "female";
+  } else if (gender === "female") {
+    gender_interest = "male";
+  }
   try {
     await client.connect();
     console.log("Connected to MongoDB");
@@ -140,8 +143,8 @@ app.put("/user", async (req, res) => {
         dob_month: formData.dob_month,
         dob_year: formData.dob_year,
         gender_identity: formData.gender,
-        breed_type: formData.breed_type, 
-        breed_interest: formData.breed_interest, 
+        breed_type: formData.breed_type,
+        breed_interest: formData.breed_interest,
         url: formData.url,
         about: formData.about,
         matches: formData.matches,
@@ -214,10 +217,11 @@ app.get("/users", async (req, res) => {
     const users = database.collection("users");
 
     const pipeline = [
-      { //Check if the '' over the paramter is correct for aggregation.
-        '$match': {
-          'user_id': {
-            '$in': userIds,
+      {
+        //Check if the '' over the paramter is correct for aggregation.
+        $match: {
+          user_id: {
+            $in: userIds,
           },
         },
       },
@@ -289,7 +293,7 @@ app.get("/messages", async (req, res) => {
 
 //ADD MESSAGES
 app.post("/messages", async (req, res) => {
-  const message = req.body;
+  const message = req.body.message;
 
   //   const newmessage = {
   //     timestamp: timestamp,
