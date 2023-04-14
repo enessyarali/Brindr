@@ -38,8 +38,12 @@ const Dashboard = () => {
 
   useEffect(() => {
     getUser();
-    getPreferredUsers();
-  }, [user, preferredusers]);
+  }, []);
+
+  useEffect(() => {
+    if(user){ 
+      getPreferredUsers()};
+  }, [user]);
 
   const updateMatches = async (matchedUserId) => {
     try {
