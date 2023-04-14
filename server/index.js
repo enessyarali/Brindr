@@ -100,17 +100,19 @@ app.post("/login", async (req, res) => {
 //   }
 // });
 app.get("/preferredusers", async (req, res) => {
-  const breed = req.query.breed;
+  const breed_interest = req.query.breed_interest;
   const gender = req.query.gender;
-
+  let gender_interest = ""
+  if(gender === "male"){gender_interest = "female";
+  }else if(gender === "female") {gender_interest = "male";}
   try {
     await client.connect();
     console.log("Connected to MongoDB");
     const database = client.db("app-data");
     const users = database.collection("users");
     const query = {
-      type_interest: { $in: breed },
-      gender: gender,
+      breed_type: { $in: breed_interest },
+      gender_identity: gender_interest,
     };
     const foundUsers = await users.find(query).toArray();
     res.send(foundUsers);
@@ -161,7 +163,6 @@ app.get("/user", async (req, res) => {
     await client.connect();
     const database = client.db("app-data");
     const users = database.collection("users");
-    console.log(userId);
     const query = { user_id: userId };
     const user = await users.findOne(query);
     if (!user) {
@@ -213,10 +214,10 @@ app.get("/users", async (req, res) => {
     const users = database.collection("users");
 
     const pipeline = [
-      {
-        $match: {
-          user_id: {
-            $in: userIds,
+      { //Check if the '' over the paramter is correct for aggregation.
+        '$match': {
+          'user_id': {
+            '$in': userIds,
           },
         },
       },
