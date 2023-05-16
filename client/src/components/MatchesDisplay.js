@@ -3,7 +3,7 @@ import { useState  ,useEffect} from "react";
 import { useCookies } from "react-cookie";
 const MatchesDisplay = ({ matches , setClickedUser }) => {
   const [matchedProfiles, setMatchedProfiles] = useState(null);
-  const matchedUserId = matches.map(({ user_id }) => user_id);
+  const matchedUserId = matches?.map(({ user_id }) => user_id);
   const [cookies , setCookie , removeCookie] = useCookies(["user"])
   const UserId = cookies.UserId;
   const getMatches = async () => {
@@ -21,10 +21,11 @@ const MatchesDisplay = ({ matches , setClickedUser }) => {
   }, [matches]);
   //SHOWING THE MATCHES ONLY IF WE ARE IN THEIR MATCHES
   // const filteredMatches = matchedProfiles?.filter(({ user_id }) => matchedUserId.includes(user_id))
-  const filteredMatches = matchedProfiles?.filter(matchedProfile => matchedProfile.matches.filter(profile => profile.user_id ===  UserId).length > 0)
+  let filteredMatches = matchedProfiles?.filter(matchedProfile => matchedProfile.matches.filter(profile => profile.user_id ===  UserId).length > 0)
+  console.log("filtered: " + filteredMatches);
   return (
     <div className="matches-display">
-       {filteredMatches.map(({ match , _index }) =>(
+       {filteredMatches?.map(({ match , _index }) =>(
         <div key={{_index}} className="match-card" onClick={() => setClickedUser(match)} >
             <div className="img-container">
                 <img src={match?.url} alt={match?.first_name + ' profile'} />

@@ -3,11 +3,7 @@ require('dotenv').config();
 
 const uri = process.env.URI;
   
-const client = new MongoClient(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  serverApi: ServerApiVersion.v1,
-});
+
 
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
@@ -27,6 +23,11 @@ app.get("/", (req, res) => {
 
 //SIGNING UP  !!TESTED WITH POSTMAN
 app.post("/signup", async (req, res) => {
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverApi: ServerApiVersion.v1,
+  });
   const { email, password } = req.body;
 
   const generatedUserId = uuidv4(); //Generates unique userid for each user
@@ -57,10 +58,17 @@ app.post("/signup", async (req, res) => {
       .json({ token: logintoken, userId: generatedUserId, email: LCemail });
   } catch (error) {
     console.log(error);
+  }finally{
+    await client.close();
   }
 });
 //LOGGING IN
 app.post("/login", async (req, res) => {
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverApi: ServerApiVersion.v1,
+  });
   const { email, password } = req.body;
   try {
     await client.connect();
@@ -79,6 +87,8 @@ app.post("/login", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
+  }finally{
+    await client.close();
   }
 });
 
@@ -100,6 +110,11 @@ app.post("/login", async (req, res) => {
 //   }
 // });
 app.get("/preferredusers", async (req, res) => {
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverApi: ServerApiVersion.v1,
+  });
   const breed_interest = req.query.breed_interest;
   const gender = req.query.gender;
   let gender_interest = "";
@@ -127,55 +142,66 @@ app.get("/preferredusers", async (req, res) => {
 });
 
 // //UPDATING USER DATA
-// app.put("/user", async (req, res) => {
-//   const formData = req.body.formData; //removed .formdata for testing
-//   console.log(formData);
-//   try {
-//     await client.connect();
-//     const database = client.db("app-data");
-//     const users = database.collection("users");
-
-//     const query = { user_id: formData.user_id };
-//     const updatedDocument = {
-//       $set: {
-//         first_name: formData.first_name,
-//         dob_day: formData.dob_day,
-//         dob_month: formData.dob_month,
-//         dob_year: formData.dob_year,
-//         gender_identity: formData.gender,
-//         breed_type: formData.breed_type,
-//         breed_interest: formData.breed_interest,
-//         url: formData.url,
-//         about: formData.about,
-//         matches: formData.matches,
-//       },
-//     };
-//     const updatedUser = await users.updateOne(query, updatedDocument);
-//     res.send(updatedUser);
-//   } catch (error) {
-//     console.log(error);
-//   } finally {
-//     await client.close();
-//   }
-// });
-
-//GETTING ONE USER
-app.get("/user", async (req, res) => {
-  const userId = req.query.UserId;
+app.put("/user", async (req, res) => {
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverApi: ServerApiVersion.v1,
+  });
+  const formData = req.body.formData; //removed .formdata for testing
+  console.log(formData);
   try {
     await client.connect();
     const database = client.db("app-data");
     const users = database.collection("users");
-    const query = { user_id: userId };
-    const user = await users.findOne(query); 
+
+    const query = { user_id: formData.user_id };
+    const updatedDocument = {
+      $set: {
+        first_name: formData.first_name,
+        dob_day: formData.dob_day,
+        dob_month: formData.dob_month,
+        dob_year: formData.dob_year,
+        gender_identity: formData.gender,
+        breed_type: formData.breed_type,
+        breed_interest: formData.breed_interest,
+        url: formData.url,
+        about: formData.about,
+        matches: formData.matches,
+      },
+    };
+    const updatedUser = await users.updateOne(query, updatedDocument);
+    res.send(updatedUser);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    await client.close();
+  }
+});
+
+//GETTING ONE USER
+app.get("/user", async (req, res) => {
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverApi: ServerApiVersion.v1,
+  });
+  const UserId = req.query.UserId;
+  try {
+    await client.connect();
+    const database = client.db("app-data");
+    const users = database.collection("users");
+    const query = { user_id : UserId };
+   
+    const user = await users.findOne(query);
     if (!user) {
       // If user is not found, return 404 error
       res.status(404).send("User not found");
     } else {
       // If user is found, return user data
-      res.json(user);
+      res.send(user);
     }
-  } catch (error) {
+  }catch (error){
     // Handle any errors
     console.error(error);
     res.status(500).send("Internal server error");
@@ -186,6 +212,11 @@ app.get("/user", async (req, res) => {
 //ADDING MATCHES
 app.put("/addmatch", async (req, res) => {
   //   const { userId, matdhedUserId } = req.body;
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverApi: ServerApiVersion.v1,
+  });
   const userId = req.body.user_id;
   const matcheduserId = req.body.matcheduserId;
   try {
@@ -207,6 +238,11 @@ app.put("/addmatch", async (req, res) => {
 });
 // GET MATCHED USERS (In the query an array of matches (userIds) should be sent to this endpoint.It sends back those users as objects in an)
 app.get("/users", async (req, res) => {
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverApi: ServerApiVersion.v1,
+  });
   const userIds = req.query.userIds ? JSON.parse(req.query.userIds) : []; //This will ensure that the query parameter correctly is correctly parsed,
 
   try {
@@ -241,6 +277,11 @@ app.get("/users", async (req, res) => {
 //reverse the users and get the other users messages on the frontend
 app.get("/messages", async (req, res) => {
   // const { userId, correspondingUserId } = req.params;  | Decided to get the message users with query
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverApi: ServerApiVersion.v1,
+  });
   const userId = req.query.userId;
   const correspondingUserId = req.query.correspondingUserId;
   try {
@@ -293,6 +334,11 @@ app.get("/messages", async (req, res) => {
 
 //ADD MESSAGES
 app.post("/messages", async (req, res) => {
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverApi: ServerApiVersion.v1,
+  });
   const message = req.body.message;
 
   //   const newmessage = {

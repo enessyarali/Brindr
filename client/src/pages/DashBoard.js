@@ -8,14 +8,16 @@ const Dashboard = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const [preferredusers, setPreferredUsers] = useState([]);
   const [lastDirection, setLastDirection] = useState();
+  const [loading, setLoading] = useState(true);
+
 
   const UserId = cookies.UserId;
   const getUser = async () => {
     try {
       const response = await axios.get("http://localhost:8000/user", {
-        params: { UserId },
+        params: {UserId},
       });
-
+      console.log("response: " + response);
       setUser(response.data);
     } catch (err) {
       console.log(err);
@@ -25,12 +27,13 @@ const Dashboard = () => {
 
   const getPreferredUsers = async () => {
     try {
-      console.log(user);
+      console.log("user gender : " + user.gender_identity);
       const response = await axios.get("http://localhost:8000/preferredusers", {
-        params: { gender: user?.gender, breed_interest: user?.breed_interest },
+        params: { gender: user?.gender_identity, breed_interest: user?.breed_interest },
       });
 
       setPreferredUsers(response.data);
+      setLoading(false)
     } catch (err) {
       console.log(err);
     }
@@ -69,9 +72,7 @@ const Dashboard = () => {
   };
 
   //mathes is an object with all the user_ids that have been matched.This funtion will return an array of all the user_ids that have been matched.
-  const matchedUserIds = user?.matches
-    .map(({ user_id }) => user_id)
-    .concat(UserId);
+  const matchedUserIds = user?.matches?.map(({ user_id }) => user_id).concat(UserId) || [];
 
   // the code is filtering out preferred users who have already been matched with the logged-in user, using the matchedUserIds
   // array to keep track of the user IDs of all the matched users, and then using Array.includes() to filter out preferred users whose
@@ -79,7 +80,7 @@ const Dashboard = () => {
   // users who have not been matched with the logged-in user before.
 
   const filteredPreferredUsers = preferredusers.filter(
-    (preferredUser) => !matchedUserIds.includes(preferredUser.user_id)
+    (preferredUser) => !matchedUserIds?.includes(preferredUser.user_id)
   );
   //The problem with this logic is whether the user is matched with  other user  or not is not depending on the other user.
   //Whoever is swiped right is accepted as matched without any regard to the other users swipe.
@@ -91,7 +92,7 @@ const Dashboard = () => {
           <ChatContainer user={user} />
           <div className="swiper-container">
             <div className="card-container">
-              {filteredPreferredUsers.map((preferred_user) => (
+              {filteredPreferredUsers.length > 0 && filteredPreferredUsers.map((preferred_user) =>(
                 <TinderCard
                   className="swipe"
                   key={preferred_user.user_id}

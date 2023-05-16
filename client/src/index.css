@@ -306,7 +306,7 @@ nav .nav-button:disabled {
 }
 
 .chat-container .chat-container-header{
-  background: #6096B4;
+  background: rgba(117, 91, 179, 255);
   height: 100px;
   display: flex;
   justify-content: space-between;

@@ -70,11 +70,15 @@ const OnBoarding = () => {
     }));
   };
   const options = [
-    "Labrador",
-    "Poodle",
-    "Golden Retriever",
-    "Bulldog",
-    "Beagle",
+    "Tekir",
+    "British",
+    "Scottish",
+    "Angora",
+    "Maine",
+    "Persian",
+    "Bombay",
+    "Bengal",
+    "Siamese"
   ];
 
   console.log(formData);
