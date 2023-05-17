@@ -2,12 +2,12 @@
 
 
 ## Tech Stack  
-----------------------------------------------------------------
+
     Frontend : React,Javascript,HTML,CSS,
     Backend : MongoDB,Nodejs,Express.js
     
 ## FRONT END
-----------------------------------------------------------------
+
 ### ROUTES AND PAGES
 
 * '/' : `Home Page` .In this page user gets acces  to either login or     signup sections.Both login and signup sections are components that are used in this page.
@@ -18,7 +18,7 @@
 
 
 ## BACKEND
-----------------------------------------------------------------
+
 ### ENDPOINTS
   
   * **POST** `/signup` : Receives email and password in the req.body and hashes the password.Checks if the user exists if not adds the user to the DB.Creates a token for 24 hours and sends it back with the user data and 201 message.
@@ -39,8 +39,7 @@
   
   * **POST** `/messages` : Receives message object from req.body. Adds it into the messages collection in the database.
 
-  ## PICTURES
-  ----------------------------------------------------------------
+## PICTURES 
 ### Home Page
  ![HomePage](application_images/HomePage.png)
 
@@ -65,8 +64,6 @@
 ### Chat 2
 ![Chat_2](application_images/Chat_2.png)
  
----------------------------------------------------------------------
-
 ## Setup
 
   Clone the project to your local computer.
