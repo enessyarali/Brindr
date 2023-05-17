@@ -12,6 +12,7 @@ const MatchesDisplay = ({ matches , setClickedUser }) => {
         params: { userIds: JSON.stringify(matchedUserId) },
       });
       setMatchedProfiles(response.data);
+      console.log(matchedProfiles);
     } catch (error) {
       console.log(error);
     }
@@ -20,14 +21,15 @@ const MatchesDisplay = ({ matches , setClickedUser }) => {
     getMatches();
   }, [matches]);
   //SHOWING THE MATCHES ONLY IF WE ARE IN THEIR MATCHES
-  // const filteredMatches = matchedProfiles?.filter(({ user_id }) => matchedUserId.includes(user_id))
-  let filteredMatches = matchedProfiles?.filter(matchedProfile => matchedProfile.matches.filter(profile => profile.user_id ===  UserId).length > 0)
-  console.log("filtered: " + filteredMatches);
+  const filteredMatches = matchedProfiles?.filter(({ user_id }) => matchedUserId.includes(user_id))
+  // let filteredMatches = matchedProfiles?.filter(matchedProfile => matchedProfile.matches.filter(profile => profile.user_id ===  UserId).length > 0)
+  console.log("Filtered Matches");
+  console.log( filteredMatches);
   return (
     <div className="matches-display">
-       {filteredMatches?.map(({ match , _index }) =>(
+       {filteredMatches?.map(( match , _index ) =>(
         <div key={{_index}} className="match-card" onClick={() => setClickedUser(match)} >
-            <div className="img-container">
+            <div className="image-container">
                 <img src={match?.url} alt={match?.first_name + ' profile'} />
             </div>
             <h3>{match?.first_name}</h3>

@@ -7,6 +7,7 @@ const ChatDisplay = ({ user, clickedUser }) => {
   const clickedUserId = clickedUser?.user_id;
   const [usersMessages, setUsersMessages] = useState(null);
   const [clickedUsersMessages, setClickedUsersMessages] = useState(null);
+  const messages = [];
   const getUsersMessages = async () => {
     try {
       const response = await axios.get("http://localhost:8000/messages", {
@@ -56,7 +57,7 @@ const ChatDisplay = ({ user, clickedUser }) => {
     getClickedUsersMessages();
   }, [usersMessages, clickedUsersMessages]);
 
-  const messages = [];
+ 
 
   return (
     <>

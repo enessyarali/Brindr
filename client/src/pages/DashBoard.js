@@ -12,13 +12,11 @@ const Dashboard = () => {
 
 
   const UserId = cookies.UserId;
-  console.log(UserId);
   const getUser = async () => {
     try {
       const response = await axios.get("http://localhost:8000/user", {
         params: {UserId : UserId} ,
       });
-      console.log("response: " + response.da);
       setUser(response.data);
     } catch (err) {
       console.log(err);
@@ -59,10 +57,10 @@ const Dashboard = () => {
       });
       getUser();
     } catch (err) {
-      console.log();
+      console.log(err);
     }
   };
-
+    console.log(user);
   const swiped = (direction, swipedUserId) => {
     if (direction === "right") {
       updateMatches(swipedUserId);

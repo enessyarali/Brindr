@@ -187,7 +187,7 @@ app.get("/user", async (req, res) => {
     serverApi: ServerApiVersion.v1,
   });
   const UserId = req.query.UserId;
-  console.log(UserId);
+  
   try {
     await client.connect();
     const database = client.db("app-data");
@@ -211,14 +211,13 @@ app.get("/user", async (req, res) => {
 });
 //ADDING MATCHES
 app.put("/addmatch", async (req, res) => {
-  //   const { userId, matdhedUserId } = req.body;
   const client = new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     serverApi: ServerApiVersion.v1,
   });
-  const userId = req.body.user_id;
-  const matcheduserId = req.body.matcheduserId;
+  const userId = req.body.UserId;
+  const matchedUserId = req.body.matchedUserId;
   try {
     await client.connect();
     const database = client.db("app-data");
@@ -226,7 +225,7 @@ app.put("/addmatch", async (req, res) => {
 
     const query = { user_id: userId };
     const updatedDocument = {
-      $push: { matches: { user_id: matcheduserId } },
+      $push: { matches: { user_id: matchedUserId } },
     };
     const user = await users.updateOne(query, updatedDocument);
     res.send(user);
@@ -236,6 +235,7 @@ app.put("/addmatch", async (req, res) => {
     await client.close();
   }
 });
+
 // GET MATCHED USERS (In the query an array of matches (userIds) should be sent to this endpoint.It sends back those users as objects in an)
 app.get("/users", async (req, res) => {
   const client = new MongoClient(uri, {
@@ -297,10 +297,8 @@ app.get("/messages", async (req, res) => {
       },
     ];
 
-    console.log("userId:", userId);
-    console.log("correspondingUserId:", correspondingUserId);
     const messageHistory = await collection.aggregate(pipeline).toArray();
-    console.log("messageHistory:", messageHistory);
+
     res.send(messageHistory);
   } catch (error) {
     console.log(error);
@@ -340,13 +338,7 @@ app.post("/messages", async (req, res) => {
     serverApi: ServerApiVersion.v1,
   });
   const message = req.body.message;
-
-  //   const newmessage = {
-  //     timestamp: timestamp,
-  //     from_userId: from_userId,
-  //     to_userId: to_userId,
-  //     message: message,
-  //   };  The message object will arrive with all of this info.There is no need to destructure the incoming message data in req.body.
+  console.log(message);
   try {
     await client.connect();
     const database = client.db("app-data");
