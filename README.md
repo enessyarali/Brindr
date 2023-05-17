@@ -51,10 +51,10 @@
 ![OnBoardingPage](application_images/OnboardingPage.png)
 
 ### DashBoard Page
-![DashBoardPage](application_images/DashBoardPage.png)
+![DashBoardPage](application_images/DashboardPage.png)
 
 ### DashBoard Page 2
-![DashBoardPage](application_images/DashBoard_2.png)
+![DashBoardPage_2](application_images/Dashboard_2.png)
 
 ### Match
 ![Match](application_images/Match.png)
