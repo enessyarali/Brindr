@@ -35,7 +35,7 @@
   
   * **GET** `/users` : Receives the userIds array in the req.body .Returns the datas of the matched users in the array.
   
-  * **GET** `messages` : Receives userId and correspondingUserId in req.query.Returns the messages that userId sent to corresponding userId.
+  * **GET** `/messages` : Receives userId and correspondingUserId in req.query.Returns the messages that userId sent to corresponding userId.
   
   * **POST** `/messages` : Receives message object from req.body. Adds it into the messages collection in the database.
 
