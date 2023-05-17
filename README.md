@@ -48,7 +48,7 @@
  ![Login](application_images/Login.png)
 
 ### OnBoarding Page
-![OnBoardingPage](application_images/OnBoardingPage.png)
+![OnBoardingPage](application_images/OnboardingPage.png)
 
 ### DashBoard Page
 ![DashBoardPage](application_images/DashBoardPage.png)
