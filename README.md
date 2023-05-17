@@ -50,14 +50,11 @@
 ### OnBoarding Page
 ![OnBoardingPage](application_images/OnBoardingPage.png)
 
-
 ### DashBoard Page
 ![DashBoardPage](application_images/DashBoardPage.png)
 
-
 ### DashBoard Page 2
 ![DashBoardPage](application_images/DashBoard_2.png)
-
 
 ### Match
 ![Match](application_images/Match.png)
