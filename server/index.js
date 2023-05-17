@@ -187,12 +187,12 @@ app.get("/user", async (req, res) => {
     serverApi: ServerApiVersion.v1,
   });
   const UserId = req.query.UserId;
+  console.log(UserId);
   try {
     await client.connect();
     const database = client.db("app-data");
     const users = database.collection("users");
     const query = { user_id : UserId };
-   
     const user = await users.findOne(query);
     if (!user) {
       // If user is not found, return 404 error

@@ -4,24 +4,26 @@ import ChatContainer from "../components/ChatContainer";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 const Dashboard = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const [preferredusers, setPreferredUsers] = useState([]);
   const [lastDirection, setLastDirection] = useState();
-  const [loading, setLoading] = useState(true);
+ 
 
 
   const UserId = cookies.UserId;
+  console.log(UserId);
   const getUser = async () => {
     try {
       const response = await axios.get("http://localhost:8000/user", {
-        params: {UserId},
+        params: {UserId : UserId} ,
       });
-      console.log("response: " + response);
+      console.log("response: " + response.da);
       setUser(response.data);
     } catch (err) {
       console.log(err);
     }
+
   };
   console.log(user);
 
@@ -33,15 +35,16 @@ const Dashboard = () => {
       });
 
       setPreferredUsers(response.data);
-      setLoading(false)
     } catch (err) {
       console.log(err);
     }
   };
 
   useEffect(() => {
+    console.log("useEffect is called");
     getUser();
   }, []);
+  
 
   useEffect(() => {
     if(user){ 
@@ -92,7 +95,7 @@ const Dashboard = () => {
           <ChatContainer user={user} />
           <div className="swiper-container">
             <div className="card-container">
-              {filteredPreferredUsers.length > 0 && filteredPreferredUsers.map((preferred_user) =>(
+              {filteredPreferredUsers.map((preferred_user) => (
                 <TinderCard
                   className="swipe"
                   key={preferred_user.user_id}

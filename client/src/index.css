@@ -303,6 +303,9 @@ nav .nav-button:disabled {
     rgba(0, 0, 0, 0.8) 0px 0px 0px 1px;
     text-align: left;
     z-index: 1;
+    height: 100vh;
+    width: 45vh;
+    
 }
 
 .chat-container .chat-container-header{
@@ -336,9 +339,9 @@ nav .nav-button:disabled {
 }
 
 .image-container{
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+  border-radius: 20%;
   overflow: hidden;
   margin: 10px;
 }
